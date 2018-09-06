@@ -11,12 +11,12 @@ var riskType = {
             // handle doc
             riskType.localData = [];
             doc.risktypes.forEach(element => {
-                riskType.localData.push(element)
+                riskType.localData.push({risktype: element})
             });
-            $$("risktypes").clearAll();
-            $$("risktypes").parse(riskType.localData);
-            $$("risktypes").refresh();
-            $$("risktypes").show();
+            $$("risktypedt").clearAll();
+            $$("risktypedt").parse(riskType.localData);
+            $$("risktypedt").refresh();
+            $$("risktype").show();
         }).catch(function(err) {
             console.log(err);
         });
@@ -27,12 +27,12 @@ var riskType = {
         id: "risktype",
         autoConfig: true,
         cols: [{
+            id:'risktypedt',
             view: "datatable",
             columns: [{
-                id: "risktypes",
-                header: ["Risk Types", {
-                    content: "textFilter"
-                }]
+                id: "risktype",
+                header: ["Risk Types", { content: "textFilter" }],
+                fillspace: true
             }]
         }]
     }

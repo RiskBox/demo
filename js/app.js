@@ -51,7 +51,6 @@ var myApp = {
                                 data: [
                                     { id: "risktypes", value: "Risk Types" },
                                     { id: "products", value: "Products" },
-                                    { id: "euf", value: "EUF" },
                                     { id: "vbw", value: "VBW" },
                                     { id: "import", value: "Import data" },
                                     { id: "export", value: "Export data" },
@@ -60,11 +59,11 @@ var myApp = {
                             },
                             {
                                 id: 2,
-                                value: "Data",
+                                value: "Calculations",
                                 icon: "calculator",
                                 data: [
-                                    { id: "euf_product", value: "Enter EUF" },
-                                    { id: "values_product", value: "Enter values" }
+                                    { id: "vbw_product", value: "Enter VBW" },
+                                    { id: "euf", value: "Enter EUF" }
                                 ]
                             },
                             {
@@ -79,7 +78,7 @@ var myApp = {
                         on: {
                             onAfterSelect: function(id) {
                                 webix.message("Selected: " + id);
-                                myApp.loadPage(this.getItem(id).value);
+                                myApp.loadPage(id);
                             }
                         }
 
@@ -88,7 +87,12 @@ var myApp = {
                         id: "mainPage",
                         view: "multiview",
                         cells: [
-                            riskType.ui
+                            riskType.ui,
+                            products.ui,
+                            vbw.ui,
+                            vbw_product.ui,
+                            euf.ui,
+                            ir.ui
                         ],
                         fitBiggest: true
                     }
@@ -97,17 +101,26 @@ var myApp = {
         ]
     },
 
-
-    views: [{
-        template: "WIP!"
-    }],
-
     loadPage: function(page) {
         switch (page) {
             case "risktypes":
-
+                riskType.showUI();
                 break;
-
+            case "products":
+                products.showUI();
+                break;
+            case "vbw":
+                vbw.showUI();
+                break;
+            case "euf":
+                euf.showUI();
+                break;
+            case "vbw_product":
+                vbw_product.showUI();
+                break;
+            case "ir":
+                ir.showUI();
+                break;
             default:
                 break;
         }
