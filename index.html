@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>RiskBox</title>
+
+    <!-- <link rel="icon" type="image/png" href="img/Icon.png" /> -->
+    <link rel="stylesheet" href="https://cdn.webix.com/edge/webix.css" type="text/css" media="screen" charset="utf-8">
+    <!-- Webix framework -->
+    <script src="https://cdn.webix.com/edge/webix.js" type="text/javascript" charset="utf-8"></script>
+    <!-- PouchDB framework -->
+    <script src="https://cdn.jsdelivr.net/npm/pouchdb@7.0.0/dist/pouchdb.min.js"></script>
+
+    <!-- RiskBox Application -->
+    <script src="js/globals.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/risktype.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="js/app.js" type="text/javascript" charset="utf-8"></script>
+
+
+    <style>
+        .app_button button {
+            padding: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script type="text/javascript" charset="utf-8">
+        /**
+         *    This is a Single Page Application
+         *    it is designed for Desktop browser
+         */
+        webix.i18n.parseFormat = "%d.%m.%Y";
+        webix.i18n.setLocale();
+        webix.ready(function() {
+            myApp.init();
+        });
+    </script>
+</body>
+
+</html>
