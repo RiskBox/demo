@@ -10,6 +10,23 @@ webix.protoUI({
     webix.ActiveContent);
 /**
  * 
+ * Create new view that extends DataTable and can be used in as 
+ * forminput view
+ */
+
+webix.protoUI({
+    name: "formtable",
+    setValue: function(value) {
+        this.clearAll();
+        this.parse(value)
+    },
+    getValue: function() {
+        return this.serialize();
+    }
+}, webix.ui.datatable);
+
+/**
+ * 
  * PouchDB configuration
  * - database name
 

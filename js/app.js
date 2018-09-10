@@ -52,9 +52,9 @@ var myApp = {
                                     { id: "risktypes", value: "Risk Types" },
                                     { id: "products", value: "Products" },
                                     { id: "vbw", value: "VBW" },
-                                    { id: "import", value: "Import data" },
-                                    { id: "export", value: "Export data" },
-                                    { id: "reset", value: "Load defaults" }
+                                    //{ id: "import", value: "Import data" },
+                                    //{ id: "export", value: "Export data" },
+                                    //{ id: "reset", value: "Load defaults" }
                                 ]
                             },
                             {

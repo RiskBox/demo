@@ -89,7 +89,15 @@ var euf = {
                 { id: "glp", businesscomponent: "G/L Proofs & Substantiation", selected: 0 },
                 { id: "mgr", businesscomponent: "Management Reporting", selected: 0 },
                 { id: "rer", businesscomponent: "Regulatory & External Reporting", selected: 0 }
-            ]
+            ],
+            on: {
+                onCheck: function(rowId, colId, state) {
+                    $$("prcF").setValues({
+                        euf: (state) ?
+                            parseInt($$("prcF").getValues().euf) + 1 : parseInt($$("prcF").getValues().euf) - 1
+                    });
+                }
+            }
         };
 
         var prcForm = {
@@ -105,7 +113,138 @@ var euf = {
                         value: 0
                     }]
                 },
-                { view: "forminput", body: prcFormDT, labelWidth: 0 },
+                //{ view: "forminput", name: "prcDetails", body: prcFormDT, labelWidth: 0 },
+                {
+                    view: "formtable",
+                    height: 453,
+                    columns: [{
+                            id: "businesscomponent",
+                            header: "Business Component",
+                            adjust: "data",
+                            fillspace: 1
+                        },
+                        {
+                            id: "selected",
+                            header: "Selected",
+                            template: "{common.checkbox()}"
+                        }
+                    ],
+                    data: [{
+                            id: "psp",
+                            businesscomponent: "Product & Service Pricing",
+                            selected: 0
+                        },
+                        {
+                            id: "dls",
+                            businesscomponent: "Deal Structuring",
+                            selected: 0
+                        },
+                        {
+                            id: "orm",
+                            businesscomponent: "Order Management",
+                            selected: 0
+                        },
+                        {
+                            id: "ptv",
+                            businesscomponent: "Pre-Trade Validation",
+                            selected: 0
+                        },
+                        {
+                            id: "qpm",
+                            businesscomponent: "Quote/Price Management",
+                            selected: 0
+                        },
+                        {
+                            id: "tec",
+                            businesscomponent: "Trade Execution & Capture",
+                            selected: 0
+                        },
+                        {
+                            id: "csh",
+                            businesscomponent: "Cash Management",
+                            selected: 0
+                        },
+                        {
+                            id: "tcm",
+                            businesscomponent: "Trade Confirmation & Matching",
+                            selected: 0
+                        },
+                        {
+                            id: "pca",
+                            businesscomponent: "Position Control & Amendments",
+                            selected: 0
+                        },
+                        {
+                            id: "trr",
+                            businesscomponent: "Transaction Reporting",
+                            selected: 0
+                        },
+                        {
+                            id: "clm",
+                            businesscomponent: "Credit Limit Monitoring",
+                            selected: 0
+                        },
+                        {
+                            id: "tlm",
+                            businesscomponent: "Trading Limit Monitoring",
+                            selected: 0
+                        },
+                        {
+                            id: "trs",
+                            businesscomponent: "Trade Settlements",
+                            selected: 0
+                        },
+                        {
+                            id: "ccm",
+                            businesscomponent: "Custody/Collateral Management",
+                            selected: 0
+                        },
+                        {
+                            id: "lop",
+                            businesscomponent: "Loans Processing",
+                            selected: 0
+                        },
+                        {
+                            id: "pay",
+                            businesscomponent: "Payments",
+                            selected: 0
+                        },
+                        {
+                            id: "nor",
+                            businesscomponent: "Nostro Reconcilement",
+                            selected: 0
+                        },
+                        {
+                            id: "tar",
+                            businesscomponent: "Trading Account Reconciliations",
+                            selected: 0
+                        },
+                        {
+                            id: "glp",
+                            businesscomponent: "G/L Proofs & Substantiation",
+                            selected: 0
+                        },
+                        {
+                            id: "mgr",
+                            businesscomponent: "Management Reporting",
+                            selected: 0
+                        },
+                        {
+                            id: "rer",
+                            businesscomponent: "Regulatory & External Reporting",
+                            selected: 0
+                        }
+                    ],
+                    on: {
+                        onCheck: function(rowId, colId, state) {
+                            $$("prcF").setValues({
+                                euf: (state) ?
+                                    parseInt($$("prcF").getValues().euf) + 1 : parseInt($$("prcF").getValues().euf) - 1
+                            });
+                        }
+                    },
+                    name: "prcDetails"
+                },
                 {
                     view: "button",
                     label: "SAVE",
