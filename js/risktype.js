@@ -11,7 +11,7 @@ var riskType = {
             // handle doc
             riskType.localData = [];
             doc.risktypes.forEach(element => {
-                riskType.localData.push({risktype: element})
+                riskType.localData.push({ risktype: element });
             });
             $$("risktypedt").clearAll();
             $$("risktypedt").parse(riskType.localData);
@@ -27,7 +27,7 @@ var riskType = {
         id: "risktype",
         autoConfig: true,
         cols: [{
-            id:'risktypedt',
+            id: 'risktypedt',
             view: "datatable",
             columns: [{
                 id: "risktype",

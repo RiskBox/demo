@@ -1,7 +1,7 @@
 var ir = {
     localData: [],
 
-    showUI: function(){
+    showUI: function() {
         riskType.localData = [];
 
         $$('breadcrumb').setValue('RiskBox - Inherent Risk');
@@ -11,6 +11,6 @@ var ir = {
 
     ui: {
         id: "ir",
-        cols: [{template: "TODO!"}]
+        cols: [{ template: "TODO!" }]
     }
-}
+};

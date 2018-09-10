@@ -24,14 +24,14 @@ var vbw = {
         id: "vbw",
         autoConfig: true,
         cols: [{
-            id:'vbwdt',
+            id: 'vbwdt',
             view: "datatable",
             columns: [
-                { id: "band",  header: "Band", css:{'text-align':'right'} },
-                { id: "lowerLimit",  header: "Lower Limit", adjust:"data", css:{'text-align':'right'}  },
-                { id: "upperLimit",  header: "Upper Limit", adjust:"data", css:{'text-align':'right'}  },
-                { id: "vbw",  header: "VBW", css:{'text-align':'right'} },
-                { id: "riskRange",  header: "Change in Risk", fillspace:true }
+                { id: "band", header: "Band", css: { 'text-align': 'right' } },
+                { id: "lowerLimit", header: "US$ Lower Limit", adjust: "data", css: { 'text-align': 'right' } },
+                { id: "upperLimit", header: "US$ Upper Limit", adjust: "data", css: { 'text-align': 'right' } },
+                { id: "vbw", header: "VBW", css: { 'text-align': 'right' } },
+                { id: "riskRange", header: "Change in Risk", fillspace: true }
             ]
         }]
     }

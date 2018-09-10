@@ -62,8 +62,8 @@ var myApp = {
                                 value: "Calculations",
                                 icon: "calculator",
                                 data: [
-                                    { id: "vbw_product", value: "Enter VBW" },
-                                    { id: "euf", value: "Enter EUF" }
+                                    { id: "vbw_product", value: "VBW per Product" },
+                                    { id: "euf", value: "Risk Matrix EUF" }
                                 ]
                             },
                             {

@@ -34,11 +34,32 @@ async function setup_db() {
 setup_db();
 
 //Populate with sample data
+productData = {
+    fxf: "FX Forwards",
+    cls: "Commercial Loans (Secured)",
+    ftd: "Fixed Term Deposits",
+    rep: "Repos",
+    ccs: "Cross Currency Swaps",
+    fut: "Futures",
+    cdo: "CDOs",
+    equ: "Equities",
+    fxi: "Fixed Income",
+    pos: "Payment Orders"
+};
+
+riskTypesData = {
+    prc: "Processing",
+    mkt: "Market",
+    crd: "Credit",
+    cnd: "Conduct",
+    liq: "Liquidity",
+    irt: "Interest Rate"
+};
+
 
 async function populate_data() {
 
-    let docs_data = [
-        {
+    let docs_data = [{
             _id: "products",
             products: ["FX Forwards", "Commercial Loans (Secured)", "Fixed Term Deposits",
                 "Repos", "Cross Currency Swaps", "Futures", "CDOs", "Equities", "Fixed Income",
@@ -54,28 +75,28 @@ async function populate_data() {
         {
             _id: "euf",
             data: [
-                { risktypelabel: "Processing", id: "prc", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0},
-                { risktypelabel: "Market", id: "mkt", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0},
-                { risktypelabel: "Credit", id: "crd", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0},                                
-                { risktypelabel: "Conduct", id: "cnd", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0},
-                { risktypelabel: "Liquidity", id: "liq", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0},
-                { risktypelabel: "Interest Rate", id:"irt", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0}                                                
+                { risktypelabel: "Processing", id: "prc", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 },
+                { risktypelabel: "Market", id: "mkt", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 },
+                { risktypelabel: "Credit", id: "crd", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 },
+                { risktypelabel: "Conduct", id: "cnd", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 },
+                { risktypelabel: "Liquidity", id: "liq", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 },
+                { risktypelabel: "Interest Rate", id: "irt", fxf: 0, cls: 0, ftd: 0, rep: 0, ccs: 0, fut: 0, cdo: 0, equ: 0, fxi: 0, pos: 0 }
             ],
             doctype: "calculation"
         },
         {
             _id: "vbw_product",
-            data:[
-                {product:"FX Forwards", vbw:2, vbw_band:"1"},
-                {product:"Commercial Loans (Secured)", vbw:2, vbw_band:"1"},
-                {product:"Fixed Term Deposits", vbw:2, vbw_band:"1"},
-                {product:"Repos", vbw:2, vbw_band:"1"},
-                {product:"Cross Currency Swaps", vbw:2, vbw_band:"1"},
-                {product:"Futures", vbw:2, vbw_band:"1"},
-                {product:"CDOs", vbw:2, vbw_band:"1"},
-                {product:"Equities", vbw:2, vbw_band:"1"},
-                {product:"Fixed Income", vbw:2, vbw_band:"1"},
-                {product:"Payment Orders", vbw:2, vbw_band:"1"}
+            data: [
+                { product: "FX Forwards", vbw: 2, vbw_band: "1" },
+                { product: "Commercial Loans (Secured)", vbw: 2, vbw_band: "1" },
+                { product: "Fixed Term Deposits", vbw: 2, vbw_band: "1" },
+                { product: "Repos", vbw: 2, vbw_band: "1" },
+                { product: "Cross Currency Swaps", vbw: 2, vbw_band: "1" },
+                { product: "Futures", vbw: 2, vbw_band: "1" },
+                { product: "CDOs", vbw: 2, vbw_band: "1" },
+                { product: "Equities", vbw: 2, vbw_band: "1" },
+                { product: "Fixed Income", vbw: 2, vbw_band: "1" },
+                { product: "Payment Orders", vbw: 2, vbw_band: "1" }
             ],
             doctype: "calculation"
         },
