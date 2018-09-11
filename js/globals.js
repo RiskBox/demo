@@ -29,7 +29,6 @@ webix.protoUI({
  * 
  * PouchDB configuration
  * - database name
-
  * 
  */
 var DBNAME = "riskbox_demo";
