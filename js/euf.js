@@ -49,7 +49,9 @@ var euf = {
                         case "prc":
                             euf.showFormPRC(id.column);
                             break;
-
+                        case "mkt":
+                            euf.showFromMKT(id.column);
+                            break;
                         default:
                             break;
                     }
@@ -57,6 +59,157 @@ var euf = {
             }
         }]
     },
+
+    showFromMKT(productID){
+
+
+        var mktForm = {
+            id: "mktF",
+            view: "form",
+            width: 600,
+            rows:[
+                {
+                    cols: [{
+                        view: "text",
+                        name: "euf",
+                        label: "Risk Type: Market - Product: " + productData[productID] + " - EUF",
+                        labelWidth: 500,
+                        value: 0
+                    }]
+                },
+                {
+                    view: "select",
+                    name: 'mktAvailability',
+                    label: 'Availability and reliability of market prices:',
+                    labelPosition: 'top',
+                    labelWidth: 500,
+                    value: 1,
+                    options:[
+                        {id: 1, value:"N/A - Not Applicable"},
+                        {id: 2, value:"Active market prices"},
+                        {id: 3, value:"Inactive but observable market prices"},
+                        {id: 4, value:"Unobservable prices that need judgment"},
+                        {id: 5, value:"No prices but economic or other assumptions (demographic, holistic etc.) are required"}
+                    ],
+                    on:{
+                        onChange: function(newv, oldv){
+                            $$("mktF").setValues({
+                                euf: euf_market_trading[parseInt($$("mktF").getValues().mktTrading)-1] + euf_market_availability[parseInt($$("mktF").getValues().mktAvailability)-1],
+                                mktTrading: $$("mktF").getValues().mktTrading,
+                                mktAvailability: newv
+                            });
+                        }
+                    }
+                },
+                {
+                    view: 'select',
+                    name: 'mktTrading',
+                    label: 'The manner in which the product is traded',
+                    labelPosition: 'top',
+                    labelWidth: 500,
+                    value: 1,
+                    options:[
+                        {id: 1, value:"N/A - Not Applicable", euf:0},
+                        {id: 2, value:"Electronic", euf: 2},
+                        {id: 3, value:"Hybrid (electronic + floor / voice-based)", euf: 4},
+                        {id: 4, value:"Floor / voice-based", euf: 6},
+                        {id: 5, value:"Over-The-Counter (OTC)", euf: 10},
+                        {id: 6, value:"Other", euf: 10}
+                    ],
+                    on:{
+                        onChange: function(newv, oldv){
+                            $$("mktF").setValues({
+                                euf: euf_market_trading[parseInt($$("mktF").getValues().mktTrading)-1] + euf_market_availability[parseInt($$("mktF").getValues().mktAvailability)-1],
+                                mktTrading: newv,
+                                mktAvailability:  $$("mktF").getValues().mktAvailability
+                            });
+                        }
+                    }
+                },
+                {
+                    view: "button",
+                    label: "SAVE",
+                    type: "form",
+                    click: function() {
+
+                        RiskBoxPDB.get('mkt_'+productID).then(function(doc) {
+                            return RiskBoxPDB.put({
+                              _id: 'mkt_'+productID,
+                              _rev: doc._rev,
+                              doctype: "euf",
+                              details: $$("mktF").getValues()
+                            });
+                          }).then(function(response) {
+                            // handle response
+                          }).catch(function (err) {
+                            if (err.name === 'not_found') {
+                                return RiskBoxPDB.put({
+                                    _id: 'mkt_'+productID,
+                                    doctype: "euf",
+                                    details: $$("mktF").getValues()
+                                  }); 
+                            } else {
+                                console.log(err); // some error other than 404
+                            }
+                          });
+                        
+                        var item = $$("eufdt").getItem("mkt");
+                        item[productID] = parseInt($$("mktF").getValues().euf);
+                        $$("eufdt").updateItem("mkt", item);
+
+                        RiskBoxPDB.get('euf').then(function(doc) {
+                            return RiskBoxPDB.put({
+                              _id: 'euf',
+                              _rev: doc._rev,
+                              doctype: "calculation",
+                              data: $$('eufdt').serialize()
+                            });
+                          }).then(function(response) {
+                            // handle response
+                          }).catch(function (err) {
+                            if (err.name === 'not_found') {
+                                return RiskBoxPDB.put({
+                                    _id: 'eufdt',
+                                    doctype: 'calculation',
+                                    data: $$("eufdt").serialize()
+                                  }); 
+                            } else {
+                                console.log(err); // some error other than 404
+                            }
+                          }); 
+
+
+                        $$("mktF").hide();
+                    }
+                }
+            ]
+        };
+
+        webix.ui({
+            view: "window",
+            id: "mktW",
+            width: 600,
+            position: "top",
+            head: "EUF Market - " + productData[productID],
+            body: webix.copy(mktForm)
+        }).show();
+
+        RiskBoxPDB.get('mkt_'+productID).then(function(doc) {
+            $$("mktF").setValues(doc.details);
+          }).catch(function (err) {
+            if (err.name === 'not_found') {
+                return RiskBoxPDB.put({
+                    _id: 'mkt_'+productID,
+                    doctype: "euf",
+                    details: $$("mktF").getValues()
+                  }); 
+            } else {
+                console.log(err); // some error other than 404
+            }
+          });
+
+    },
+
 
     showFormPRC: function(productID) {
 
@@ -73,7 +226,6 @@ var euf = {
                         value: 0
                     }]
                 },
-                //{ view: "forminput", name: "prcDetails", body: prcFormDT, labelWidth: 0 },
                 {
                     view: "formtable",
                     height: 453,
@@ -89,7 +241,8 @@ var euf = {
                             template: "{common.checkbox()}"
                         }
                     ],
-                    data: [{
+                    data: [
+                        {
                             id: "psp",
                             businesscomponent: "Product & Service Pricing",
                             selected: 0

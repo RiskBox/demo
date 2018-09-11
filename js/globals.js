@@ -73,6 +73,9 @@ riskTypesData = {
 };
 
 
+euf_market_availability = [0, 2, 5, 8, 10];
+euf_market_trading = [0, 2, 4, 6, 10, 10];
+
 async function populate_data() {
 
     let docs_data = [{
