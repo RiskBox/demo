@@ -52,6 +52,9 @@ var euf = {
                         case "mkt":
                             euf.showFromMKT(id.column);
                             break;
+                        case "crd":
+                            euf.showFormCRD(id.column);
+                            break;
                         default:
                             break;
                     }
@@ -60,8 +63,153 @@ var euf = {
         }]
     },
 
-    showFromMKT(productID){
+    showFormCRD: function(productID){
+        
+        var crdForm = {
+            id: 'crdF',
+            view: 'form',
+            width: 600,
+            rows:[
+                {
+                    cols: [{
+                        view: "text",
+                        name: "euf",
+                        label: "Risk Type: Credit - Product: " + productData[productID] + " - EUF",
+                        labelWidth: 500,
+                        value: 0
+                    }]
+                },
+                {
+                    view: 'select',
+                    name: 'crdDetails',
+                    label: 'Credit Type - Form of Security / Type of Instrument',
+                    labelPosition: 'top',
+                    labelWidth: 500,
+                    value: 1,
+                    options: [
+                        {id: 1, value:"N/A - Not Applicable"},
+                        { id: 2, value:"Commercial - Casual Overdraft"},
+{ id: 3, value:"Commercial - Credit Card"},
+{ id: 4, value:"Commercial - Unsecured"},
+{ id: 5, value:"Commercial - Cash"},
+{ id: 6, value:"Commercial - Cash Like Instruments (Margins, Liquid AAA Collateral)"},
+{ id: 7, value:"Commercial - Repurchase Agreements (Repos)"},
+{ id: 8, value:"Commercial - Trade Receivables"},
+{ id: 9, value:"Commercial - Instruments Subject to Mark-to-Market"},
+{ id: 10, value:"Commercial - Autos"},
+{ id: 11, value:"Commercial - Inventory"},
+{ id: 12, value:"Commercial - Equipment"},
+{ id: 13, value:"Commercial - Investments Subject to Mark to Model"},
+{ id: 14, value:"Commercial - Personal Guarantee"},
+{ id: 15, value:"Commercial - Project Financing"},
+{ id: 16, value:"Commercial - Commercial Real Estate"},
+{ id: 17, value:"Counterparty - FX Forwards"},
+{ id: 18, value:"Counterparty - Interest Rate Swaps"},
+{ id: 19, value:"Counterparty - Cross Currency Swaps"},
+{ id: 20, value:"Counterparty - Security Based Swaps"},
+{ id: 21, value:"Counterparty - Options"},
+{ id: 22, value:"Counterparty - Credit Default Swap"},
+{ id: 23, value:"Counterparty - Collateralized Debt Obligations (CDO) and Asset Backed Securities (ABS)"},
+{ id: 24, value:"Retail - Casual Overdraft"},
+{ id: 25, value:"Retail - Credit Card"},
+{ id: 26, value:"Retail - Unsecured"},
+{ id: 27, value:"Retail - Autos"},
+{ id: 28, value:"Retail - Personal Guarantee"},
+{ id: 29, value:"Retail - Residential Property"}
+                    ],
+                    on:{
+                        onChange: function(newv, oldv){
+                            $$("crdF").setValues({
+                                euf: euf_credit[parseInt($$("crdF").getValues().crdDetails)-1],                                
+                                crdDetails: newv
+                            });
+                        }
+                    }
+                },
+                {
+                    view: "button",
+                    label: "SAVE",
+                    type: "form",
+                    click: function() {
 
+                        RiskBoxPDB.get('crd_'+productID).then(function(doc) {
+                            return RiskBoxPDB.put({
+                              _id: 'crd_'+productID,
+                              _rev: doc._rev,
+                              doctype: "euf",
+                              details: $$("crdF").getValues()
+                            });
+                          }).then(function(response) {
+                            // handle response
+                          }).catch(function (err) {
+                            if (err.name === 'not_found') {
+                                return RiskBoxPDB.put({
+                                    _id: 'crd_'+productID,
+                                    doctype: "euf",
+                                    details: $$("crdF").getValues()
+                                  }); 
+                            } else {
+                                console.log(err); // some error other than 404
+                            }
+                          });
+                        
+                        var item = $$("eufdt").getItem("crd");
+                        item[productID] = parseInt($$("crdF").getValues().euf);
+                        $$("eufdt").updateItem("crd", item);
+
+                        RiskBoxPDB.get('euf').then(function(doc) {
+                            return RiskBoxPDB.put({
+                              _id: 'euf',
+                              _rev: doc._rev,
+                              doctype: "calculation",
+                              data: $$('eufdt').serialize()
+                            });
+                          }).then(function(response) {
+                            // handle response
+                          }).catch(function (err) {
+                            if (err.name === 'not_found') {
+                                return RiskBoxPDB.put({
+                                    _id: 'eufdt',
+                                    doctype: 'calculation',
+                                    data: $$("eufdt").serialize()
+                                  }); 
+                            } else {
+                                console.log(err); // some error other than 404
+                            }
+                          }); 
+
+
+                        $$("crdF").hide();
+                    }
+                }
+            ]
+        };
+
+        webix.ui({
+            view: "window",
+            id: "crdW",
+            width: 600,
+            position: "top",
+            head: "EUF Credit - " + productData[productID],
+            body: webix.copy(crdForm)
+        }).show();
+
+        RiskBoxPDB.get('crd_'+productID).then(function(doc) {
+            $$("crdF").setValues(doc.details);
+          }).catch(function (err) {
+            if (err.name === 'not_found') {
+                return RiskBoxPDB.put({
+                    _id: 'crd_'+productID,
+                    doctype: "euf",
+                    details: $$("crdF").getValues()
+                  }); 
+            } else {
+                console.log(err); // some error other than 404
+            }
+          });        
+    },
+
+    showFromMKT: function(productID){
 
         var mktForm = {
             id: "mktF",
@@ -209,7 +357,6 @@ var euf = {
           });
 
     },
-
 
     showFormPRC: function(productID) {
 

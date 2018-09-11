@@ -75,6 +75,8 @@ riskTypesData = {
 
 euf_market_availability = [0, 2, 5, 8, 10];
 euf_market_trading = [0, 2, 4, 6, 10, 10];
+euf_credit = [0, 2, 2, 2, 4, 5, 5, 8, 8, 8, 12, 12, 12, 14,
+    16, 18, 4, 8, 8, 8, 8, 14, 18, 2, 2, 2, 8, 14, 16];
 
 async function populate_data() {
 
